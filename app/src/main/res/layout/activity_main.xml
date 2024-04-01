@@ -1,105 +1,134 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="26dp"
+    android:paddingRight="26dp"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
     tools:context=".MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="NIS" />
-
-    <EditText
+        android:id="@+id/textJudul"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editTextNis" />
+        android:layout_marginTop="20dp"
+        android:text="Biodata"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:textAlignment="center" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nama" />
+        android:text="NIK Siswa" />
 
+    <!-- EditText untuk NIK -->
     <EditText
+        android:id="@+id/editTextNik"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editTextName" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
+    <!-- TextView untuk Nama -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alamat" />
+        android:text="Nama Siswa" />
 
+    <!-- EditText untuk Nama -->
     <EditText
+        android:id="@+id/editTextNama"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editTextAddress"/>
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
+    <!-- TextView untuk Alamat -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alamat rumah" />
+
+    <!-- EditText untuk Alamat -->
+    <EditText
+        android:id="@+id/editTextAlamat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <!-- TextView untuk Kota -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kota" />
+
+    <!-- Spinner untuk Kota -->
+    <Spinner
+        android:id="@+id/editTextKota"
+        android:entries="@array/daftar_kota"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <!-- TextView untuk Jenis Kelamin -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Jenis Kelamin" />
 
+
+
     <RadioGroup
+        android:id="@+id/editTextJk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-
-        android:id="@+id/chooseGender">
-
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <!-- RadioButton Laki-Laki -->
         <RadioButton
             android:id="@+id/laki"
-            android:layout_width="175dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Laki-Laki" />
+            android:text="Laki-Laki"/>
 
+        <!-- RadioButton Perempuan -->
         <RadioButton
             android:id="@+id/perempuan"
-            android:layout_width="175dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Perempuan" />
+            android:text="Perempuan"/>
     </RadioGroup>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="Kota" />
 
-    <Spinner
-        android:id="@+id/spinnerCity"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="35dp">
-    </Spinner>
-
+    <!-- TextView untuk Umur -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Umur" />
 
+    <!-- EditText untuk Umur -->
     <EditText
+        android:id="@+id/editTextUmur"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editTextAge" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-
+    <!-- Button untuk Menambah Data Siswa -->
+    <Button
+        android:id="@+id/buttonAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tambah Data Siswa" />
 
     <Button
+        android:id="@+id/view"
+        android:layout_marginTop="18dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tambah Pegawai"
-        android:id="@+id/buttonAdd" />
-
-
-
-
-
+        android:text="Lihat data Siswa" />
 
 </LinearLayout>
+

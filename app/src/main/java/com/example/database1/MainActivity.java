@@ -1,61 +1,83 @@
 package com.example.database1;
+
+import static android.widget.Toast.makeText;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import static android.widget.Toast.makeText;
+import android.content.Intent;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText editTextNis;
-    private EditText editTextName;
-    private EditText editTextAddress;
-    private Spinner spinnerCity;
-    private RadioGroup chooseGender;
-    private EditText editTextAge;
-    private Button buttonAdd;
-
-    private String[] Item = {"Jakarta", "Bogor", "Depok", "Tanggerang", "Bekasi", "Bandung"};
+    private EditText editTextNik;
+    private EditText editTextNama;
+    private EditText editTextAlamat;
+    private Spinner spinnerKota; // Changed to Spinner
+    private RadioGroup radioGroupJk; // Changed to RadioGroup
+    private EditText editTextUmur;
+    private Button buttonAdd, view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Spinner List = findViewById(R.id.spinnerCity);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Item);
-        List.setAdapter(adapter);
+        // Initialize Views
+        editTextNik = findViewById(R.id.editTextNik);
+        editTextNama = findViewById(R.id.editTextNama); // Ganti editTextName menjadi editTextNama
+        editTextAlamat = findViewById(R.id.editTextAlamat);
+        spinnerKota = findViewById(R.id.editTextKota);
+        radioGroupJk = findViewById(R.id.editTextJk);
+        editTextUmur = findViewById(R.id.editTextUmur);
+        buttonAdd = findViewById(R.id.buttonAdd);
+        view = (Button) findViewById(R.id.view);
 
-        editTextNis = (EditText) findViewById(R.id.editTextNis);
-        editTextName = (EditText) findViewById(R.id.editTextName);
-        editTextAddress = (EditText) findViewById(R.id.editTextAddress);
-        spinnerCity = (Spinner) findViewById(R.id.spinnerCity);
-        chooseGender = (RadioGroup) findViewById(R.id.chooseGender);
-        editTextAge = (EditText) findViewById(R.id.editTextAge);
-        buttonAdd = (Button) findViewById(R.id.buttonAdd);
 
-        buttonAdd.setOnClickListener((View.OnClickListener) this);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, TampilData.class);
+                startActivity(intent);
+            }
+        });
+
+        // Set listener to button
+        buttonAdd.setOnClickListener(this);
     }
 
-    private void addPersonalData() {
+    private void addEmployee() {
+        final String name = editTextNama.getText().toString().trim(); // Ubah menjadi editTextNama
+        final String nik = editTextNik.getText().toString().trim();
+        final String alamat = editTextAlamat.getText().toString().trim();
+        final String kota = spinnerKota.getSelectedItem().toString();
+        final String jk;
+        int selectedId = radioGroupJk.getCheckedRadioButtonId();
+        if (selectedId != -1) {
+            RadioButton selectedRadioButton = findViewById(selectedId);
+            jk = selectedRadioButton.getText().toString();
+        } else {
+            // Handle jika tidak ada RadioButton yang dipilih
+            return;
+        }
+        final String umur = editTextUmur.getText().toString().trim();
 
-        final String nis = editTextNis.getText().toString().trim();
-        final String name = editTextName.getText().toString().trim();
-        final String address = editTextAddress.getText().toString().trim();
-        final String city = spinnerCity.toString().trim();
-        final String gender = chooseGender.toString().trim();
-        final String age = editTextAge.getText().toString().trim();
-
-        class AddPersonalDate extends AsyncTask<Void, Void, String> {
+        class AddEmployee extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
 
             @Override
@@ -68,32 +90,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                Toast.makeText(MainActivity.this, s, Toast.LENGTH_LONG).show();
+
+                // Handle response message
+                if (s.trim().equals("Berhasil Menambahkan Pegawai")) {
+                    Toast.makeText(MainActivity.this, "Data Gagal ditambahkan", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Data Siswa berhasil ditambahkan ", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             protected String doInBackground(Void... v) {
                 HashMap<String, String> params = new HashMap<>();
-                params.put(configuration.KEY_EMP_NIS, nis);
-                params.put(configuration.KEY_EMP_NAME, name);
-                params.put(configuration.KEY_EMP_ADDRESS, address);
-                params.put(configuration.KEY_EMP_CITY, city);
-                params.put(configuration.KEY_EMP_GENDER, gender);
-                params.put(configuration.KEY_EMP_AGE, age);
-
+                params.put(konfigurasi.KEY_EMP_NIK, nik);
+                params.put(konfigurasi.KEY_EMP_NAMA, name);
+                params.put(konfigurasi.KEY_EMP_ALAMAT, alamat);
+                params.put(konfigurasi.KEY_EMP_KOTA, kota);
+                params.put(konfigurasi.KEY_EMP_KELAMIN, jk);
+                params.put(konfigurasi.KEY_EMP_UMUR, umur);
                 RequestHandler rh = new RequestHandler();
-                String res = rh.sendPostRequest(configuration.URL_ADD, params);
-                return res;
+                return rh.sendPostRequest(konfigurasi.URL_ADD, params);
             }
         }
-        AddPersonalDate ae = new AddPersonalDate();
+
+        AddEmployee ae = new AddEmployee();
         ae.execute();
     }
 
     @Override
     public void onClick(View v) {
-        if(v==buttonAdd) {
-            addPersonalData();
+        if (v == buttonAdd) {
+            addEmployee();
         }
     }
 }
+
